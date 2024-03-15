@@ -1,0 +1,63 @@
+{
+  "name": "lvl1-website-ui",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "./lvl1-website-ui/src",
+  "targets": {
+    "build": {
+      "executor": "@analogjs/platform:vite",
+      "outputs": [
+        "{options.outputPath}",
+        "{workspaceRoot}/dist/lvl1-website-ui/.nitro",
+        "{workspaceRoot}/dist/lvl1-website-ui/ssr",
+        "{workspaceRoot}/dist/lvl1-website-ui/analog"
+      ],
+      "options": {
+        "main": "lvl1-website-ui/src/main.ts",
+        "configFile": "lvl1-website-ui/vite.config.ts",
+        "outputPath": "dist/lvl1-website-ui/client",
+        "tsConfig": "lvl1-website-ui/tsconfig.app.json"
+      },
+      "defaultConfiguration": "production",
+      "configurations": {
+        "development": {
+          "mode": "development"
+        },
+        "production": {
+          "sourcemap": false,
+          "mode": "production"
+        }
+      }
+    },
+    "serve": {
+      "executor": "@analogjs/platform:vite-dev-server",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "lvl1-website-ui:build",
+        "port": 4200
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "lvl1-website-ui:build:development",
+          "hmr": true
+        },
+        "production": {
+          "buildTarget": "lvl1-website-ui:build:production"
+        }
+      }
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "browserTarget": "lvl1-website-ui:build"
+      }
+    },
+    "test": {
+      "executor": "@analogjs/platform:vitest",
+      "outputs": [
+        "{projectRoot}/coverage"
+      ]
+    }
+  },
+  "tags": []
+}
